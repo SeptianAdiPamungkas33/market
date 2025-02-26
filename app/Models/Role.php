@@ -13,7 +13,7 @@ class Role extends Model
 
     protected $fillable = ['name']; // Sesuaikan dengan migration
 
-    public function user()
+    public function users()
     {
         return $this->hasMany(User::class);
     }

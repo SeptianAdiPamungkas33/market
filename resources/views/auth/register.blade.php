@@ -24,12 +24,12 @@
                                         <img src="{{ url('img/Logo_Dinas_Kra.png') }}" alt="">
                                     </div>
                                     <div class="p-6 pb-0 mb-0">
-                                        <h4 class="font-bold">Masuk atau Sign In</h4>
+                                        <h4 class="font-bold">Regsiter</h4>
                                         <p class="mb-0">Masukkan username dan password untuk masuk</p>
                                         <p class="mb-0"> Enter your username and password to sign in</p>
                                     </div>
                                     <div class="flex-auto p-6">
-                                        <form action="{{ route('proses.login') }}" method="POST">
+                                        <form action="{{ route('proses.register') }}" method="POST">
                                             @csrf
                                             <div class="mb-4">
                                                 <label for="username">Username</label>
@@ -55,16 +55,23 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="mb-4">
+                                                <label for="nama_lengkap">Nama Lengkap</label>
+                                                <input type="text" name="nama_lengkap" placeholder="nama_lengkap" class="focus:shadow-primary-outline dark:bg-gray-950 dark:placeholder:text-white/80 
+                                                dark:text-white/80 leading-5.6 ease block w-full appearance-none rounded-lg border border-solid 
+                                                border-gray-300 bg-white bg-clip-padding p-3 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 
+                                                focus:border-fuchsia-300 focus:outline-none" />
+                                            </div>
+                                            <div class="mb-4">
+                                                <label for="email">email</label>
+                                                <input type="text" name="email" placeholder="email" class="focus:shadow-primary-outline dark:bg-gray-950 dark:placeholder:text-white/80 
+                                                dark:text-white/80 leading-5.6 ease block w-full appearance-none rounded-lg border border-solid 
+                                                border-gray-300 bg-white bg-clip-padding p-3 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 
+                                                focus:border-fuchsia-300 focus:outline-none" />
+                                            </div>
                                             <div class="flex flex-col w-full gap-4">
-                                                <!-- Tombol Masuk -->
-                                                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-500">Masuk</button>
-
-                                                <!-- Tombol Register dengan posisi tengah -->
-                                                <div class="flex justify-center">
-                                                    <a href="/register" class="w-full text-center bg-blue-600 text-white py-2 rounded hover:bg-blue-500">
-                                                        Register
-                                                    </a>
-                                                </div>
+                                                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-500">Daftar</button>
+                                                <!-- <a href="{{ route('dashboard-admin') }}" class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-500">Masuk</a> -->
                                             </div>
                                         </form>
                                     </div>
