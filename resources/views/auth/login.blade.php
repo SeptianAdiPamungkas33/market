@@ -24,7 +24,7 @@
                                         <img src="{{ url('img/Logo_Dinas_Kra.png') }}" alt="">
                                     </div>
                                     <div class="p-6 pb-0 mb-0">
-                                        <h4 class="font-bold">Masuk atau Sign In</h4>
+                                        <h4 class="font-bold">Sign Up atau Sign In</h4>
                                         <p class="mb-0">Masukkan username dan password untuk masuk</p>
                                         <p class="mb-0"> Enter your username and password to sign in</p>
                                     </div>
