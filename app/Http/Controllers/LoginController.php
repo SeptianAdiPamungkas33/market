@@ -83,4 +83,31 @@ class LoginController extends Controller
         Auth::logout();
         return redirect()->route('login')->with('success', 'Logout berhasil');
     }
+
+    public function register()
+    {
+        return view('auth.register');
+    }
+
+    public function prosesRegister(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'username' => 'required|string|unique:users',
+            'nama_lengkap' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string|min:6',
+        ]);
+
+        // Buat user baru
+        $user = new User();
+        $user->username = $request->username;
+        $user->nama_lengkap = $request->nama_lengkap;
+        $user->email = $request->email;
+        $user->role_id = 2; // User
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return redirect()->route('login')->with('success', 'Registrasi berhasil');
+    }
 }

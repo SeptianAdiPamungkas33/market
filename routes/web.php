@@ -17,33 +17,25 @@ use App\Models\User;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-// Route::get('/login', [LoginController::class, 'login']);
-// Route::post('/login', [LoginController::class, 'prosesLogin']);
-
-
-// Route::get('/dashboard-admin', [AdminController::class, 'index'])->name(name: 'dashboard-admin');
+// Redirect default ke login jika user mengakses root domain
+Route::get('/', function () {
+    return redirect()->route('login');
+});
 
 // Route untuk halaman login
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/proses-login', [LoginController::class, 'prosesLogin'])->name('proses.login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// Route dashboard berdasarkan role
+Route::get('/register', [LoginController::class, 'register'])->name('register');
+Route::post('/proses-register', [LoginController::class, 'prosesRegister'])->name('proses.register');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard-admin')->middleware('role:1'); // Hanya bisa diakses oleh role_id 1 (Admin)
+        return view('layouts.admin.dashboard');
+    })->name('dashboard-admin')->middleware('role:1'); // Hanya Admin
 
     Route::get('/user/dashboard', function () {
-        return view('user.dashboard');
-    })->name('dashboard-user')->middleware('role:2'); // Hanya bisa diakses oleh role_id 2 (User)
-});
-
-// Redirect default ke login jika user mengakses root domain
-Route::get('/', function () {
-    return redirect()->route('login');
+        return view('layouts.user.dashboard');
+    })->name('dashboard-user')->middleware('role:2'); // Hanya User
 });
