@@ -19,7 +19,7 @@ class RoleMiddleware
 
         // Periksa role_id pengguna
         $user = Auth::user();
-        if ($user->role_id != $role) {
+        if ($user->role != $role) {
             return redirect()->route('login')->with('error', 'Anda tidak memiliki izin mengakses halaman ini.');
         }
 

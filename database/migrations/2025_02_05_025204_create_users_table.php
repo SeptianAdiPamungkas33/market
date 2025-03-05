@@ -19,11 +19,8 @@ return new class extends Migration
             $table->string('email');
             $table->text('password');
             $table->string('nomor_telepon')->nullable();
-            $table->string('alamat')->nullable();
-
-            $table->unsignedBigInteger('role_id');
-            $table->foreign('role_id')->references('id')->on('roles')->onUpdate('cascade')->onDelete('restrict');
-
+            // $table->string('alamat')->nullable();
+            $table->enum('role', ['admin', 'user', 'manager'])->default('user');
             $table->rememberToken();
             $table->timestamps();
         });

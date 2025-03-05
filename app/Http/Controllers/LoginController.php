@@ -23,27 +23,21 @@ class LoginController extends Controller
         ]);
 
         // Data login
-        $credentials = $request->only('username', 'password');
-
+        $credentials = [
+            'username' => $request->input('username'),
+            'password' => $request->input('password'),
+        ];
+        
         if (Auth::attempt($credentials)) {
-            if (Auth::user()->role_id == 1) {
+            if (Auth::user()->role == 'admin') {
                 return redirect()->route('dashboard-admin'); // Admin
-            } elseif (Auth::user()->role_id == 2) {
+            } elseif (Auth::user()->role == 'user') {
+                // dd(Auth::user());
                 return redirect()->route('dashboard-user'); // User
             } else {
                 Auth::logout();
                 return redirect()->route('login')->with('error', 'Role tidak valid');
             }
-            //$user = Auth::user()->role_id;
-
-            // if ($user->role_id == 1) {
-            //     return redirect()->route('dashboard-admin'); // Admin
-            // } elseif ($user->role_id == 2) {
-            //     return redirect()->route('dashboard-user'); // User
-            // } else {
-            //     Auth::logout();
-            //     return redirect()->route('login')->with('error', 'Role tidak valid');
-            // }
         }
         return redirect()->route('login')->with('error', 'Username atau password salah');
     }
@@ -104,9 +98,9 @@ class LoginController extends Controller
         $user->username = $request->username;
         $user->nama_lengkap = $request->nama_lengkap;
         $user->email = $request->email;
-        $user->role_id = 2; // User
+        $user->role = 'user'; // User
         $user->password = bcrypt($request->password);
-        $user->save();
+        $user->save();  
 
         return redirect()->route('login')->with('success', 'Registrasi berhasil');
     }

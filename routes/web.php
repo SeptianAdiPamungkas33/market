@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 use App\Models\Role;
 use App\Models\User;
@@ -30,12 +31,37 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register', [LoginController::class, 'register'])->name('register');
 Route::post('/proses-register', [LoginController::class, 'prosesRegister'])->name('proses.register');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('layouts.admin.dashboard');
-    })->name('dashboard-admin')->middleware('role:1'); // Hanya Admin
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/admin/dashboard', function () {
+//         return view('pages.admin.dashboard');
+//     })->name('dashboard-admin')->middleware('role:admin'); // Hanya Admin
 
-    Route::get('/user/dashboard', function () {
-        return view('layouts.user.dashboard');
-    })->name('dashboard-user')->middleware('role:2'); // Hanya User
+//     Route::get('/user/dashboard', function () {
+//         return view('pages.user.dashboard');
+//     })->name('dashboard-user')->middleware('role:user'); // Hanya User
+// });
+
+// Middleware Admin
+Route::middleware(['auth', 'admin'])->group(function () {
+    // Dashboard Admin
+    Route::get('/admin/dashboard', function () {
+        return view('pages.admin.dashboard');
+    })->name('dashboard-admin');
+
+    // Product
+    Route::get('/admin/product', [AdminController::class, 'product'])->name('product-admin');
+
+    // Add Product
+    Route::post('/admin/product/add/product', [AdminController::class, 'addProduct'])->name('add-product-admin');
+    
+
+    // Route::get('/profile', function () {
+    //     return view('profile');
+    // });
 });
+
+
+// User
+Route::get('/user/dashboard', function () {
+            return view('pages.user.dashboard');
+        })->name('dashboard-user');

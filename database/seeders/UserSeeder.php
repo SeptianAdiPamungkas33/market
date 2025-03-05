@@ -20,8 +20,8 @@ class UserSeeder extends Seeder
             'nama_lengkap' => 'sellerpenjual',
             'email' => 'seller@gmail.com',
             'nomor_telepon' => '081412112112524',
-            'role_id' => '1',
-            'alamat' => 'Karanganyar',
+            'role' => 'admin',
+            // 'alamat' => 'Karanganyar',
             'password' => Hash::make('seller12'),
         ]);
 
@@ -30,8 +30,8 @@ class UserSeeder extends Seeder
             'nama_lengkap' => 'buyerpembeli',
             'email' => 'buyer@gmail.com',
             'nomor_telepon' => '08961212121',
-            'role_id' => '2',
-            'alamat' => 'Karanganyar',
+            'role' => 'user',
+            // 'alamat' => 'Karanganyar',
             'password' => Hash::make('buyer12'),
         ]);
     }

@@ -1,95 +1,107 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.auth')
+@section('content')
+    <div class="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
+        <div class="flex flex-col overflow-y-auto md:flex-row">
+            <div class="h-32 md:h-auto md:w-1/2">
+                <img aria-hidden="true" class="object-cover w-full h-full dark:hidden"
+                    src="../assets/img/create-account-office.jpeg" alt="Office" />
+                <img aria-hidden="true" class="hidden object-cover w-full h-full dark:block"
+                    src="../assets/img/create-account-office-dark.jpeg" alt="Office" />
+            </div>
+            <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
+                <div class="w-full">
+                    <!-- Validation Errors -->
+                    {{-- <x-auth-validation-errors class="mb-4" :errors="$errors" /> --}}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <h1 class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">
+                        Create account
+                    </h1>
+                    <form action="{{ route('proses.register') }}" method="POST">
+                        @csrf
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Name</span>
+                            <input
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                placeholder="Jane Doe" type="text" id="nama_lengkap" name="nama_lengkap"
+                                value="{{ old('nama_lengkap') }}" required autofocus />
+                        </label>
+                        <label class="block text-sm mt-4">
+                            <span class="text-gray-700 dark:text-gray-400">Username</span>
+                            <input
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                placeholder="Jane Doe" type="text" id="username" name="username"
+                                value="{{ old('username') }}" required autofocus />
+                        </label>
+                        <label class="block mt-4 text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Email</span>
+                            <input type="email" name="email" id="email" value="{{ old('email') }}"
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                placeholder="Jane@test.com" required />
+                        </label>
+                        <label class="block mt-4 text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Password</span>
+                            <input name="password"
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                placeholder="***************" type="password" required />
+                        </label>
+                        {{-- <label class="block mt-4 text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">
+                                Confirm password
+                            </span>
+                            <input
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                placeholder="***************" type="password" name="password_confirmation" required />
+                        </label> --}}
 
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.2/dist/tailwind.min.css" rel="stylesheet">
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js"></script>
-
-    <title>Document</title>
-</head>
-
-<body>
-    <div class="m-0 w-full font-sans antialiased font-normal bg-white text-start text-base leading-default text-slate-500">
-        <main class="mt-0 transition-all duration-200 ease-in-out">
-            <section>
-                <div class="relative flex items-center min-h-screen p-0 overflow-hidden bg-center bg-cover">
-                    <div class="container z-1">
-                        <div class="flex flex-wrap -mx-3">
-                            <div class="flex flex-col w-full max-w-full px-3 mx-auto lg:mx-0 shrink-0 md:flex-0 md:w-7/12 lg:w-5/12 xl:w-5/12">
-                                <div class="relative flex flex-col min-w-0 break-words bg-transparent border-0 shadow-none lg:py4 dark:bg-gray-950 rounded-2xl bg-clip-border">
-                                    <div class="flex items-center justify-center w-full py-2">
-                                        <img src="{{ url('img/Logo_Dinas_Kra.png') }}" alt="">
-                                    </div>
-                                    <div class="p-6 pb-0 mb-0">
-                                        <h4 class="font-bold">Regsiter</h4>
-                                        <p class="mb-0">Masukkan username dan password untuk masuk</p>
-                                        <p class="mb-0"> Enter your username and password to sign in</p>
-                                    </div>
-                                    <div class="flex-auto p-6">
-                                        <form action="{{ route('proses.register') }}" method="POST">
-                                            @csrf
-                                            <div class="mb-4">
-                                                <label for="username">Username</label>
-                                                <input type="text" name="username" placeholder="username" class="focus:shadow-primary-outline dark:bg-gray-950 dark:placeholder:text-white/80 
-                                                dark:text-white/80 leading-5.6 ease block w-full appearance-none rounded-lg border border-solid 
-                                                border-gray-300 bg-white bg-clip-padding p-3 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 
-                                                focus:border-fuchsia-300 focus:outline-none" />
-                                            </div>
-                                            <div class="mb-4 w-full flex" x-data="{ show: true }">
-                                                <div class="relative w-full">
-                                                    <label for="password">Password</label>
-                                                    <input :type="show ? 'password' : 'text'" name="password" placeholder="password" class="focus:shadow-primary-outline dark:bg-gray-950 dark:placeholder:text-white/80  dark:text-white/80 leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding p-3 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" />
-                                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 mt-8">
-                                                        <svg class="h-6 text-gray-700 cursor-pointer" fill="none" @click="show = !show" :class="{'hidden': !show, 'block':show }" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 576 512">
-                                                            <path fill="currentColor" d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z">
-                                                            </path>
-                                                        </svg>
-
-                                                        <svg class="h-6 text-gray-700 cursor-pointer" fill="none" @click="show = !show" :class="{'block': !show, 'hidden':show }" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 640 512">
-                                                            <path fill="currentColor" d="M320 400c-75.85 0-137.25-58.71-142.9-133.11L72.2 185.82c-13.79 17.3-26.48 35.59-36.72 55.59a32.35 32.35 0 0 0 0 29.19C89.71 376.41 197.07 448 320 448c26.91 0 52.87-4 77.89-10.46L346 397.39a144.13 144.13 0 0 1-26 2.61zm313.82 58.1l-110.55-85.44a331.25 331.25 0 0 0 81.25-102.07 32.35 32.35 0 0 0 0-29.19C550.29 135.59 442.93 64 320 64a308.15 308.15 0 0 0-147.32 37.7L45.46 3.37A16 16 0 0 0 23 6.18L3.37 31.45A16 16 0 0 0 6.18 53.9l588.36 454.73a16 16 0 0 0 22.46-2.81l19.64-25.27a16 16 0 0 0-2.82-22.45zm-183.72-142l-39.3-30.38A94.75 94.75 0 0 0 416 256a94.76 94.76 0 0 0-121.31-92.21A47.65 47.65 0 0 1 304 192a46.64 46.64 0 0 1-1.54 10l-73.61-56.89A142.31 142.31 0 0 1 320 112a143.92 143.92 0 0 1 144 144c0 21.63-5.29 41.79-13.9 60.11z">
-                                                            </path>
-                                                        </svg>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="mb-4">
-                                                <label for="nama_lengkap">Nama Lengkap</label>
-                                                <input type="text" name="nama_lengkap" placeholder="nama_lengkap" class="focus:shadow-primary-outline dark:bg-gray-950 dark:placeholder:text-white/80 
-                                                dark:text-white/80 leading-5.6 ease block w-full appearance-none rounded-lg border border-solid 
-                                                border-gray-300 bg-white bg-clip-padding p-3 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 
-                                                focus:border-fuchsia-300 focus:outline-none" />
-                                            </div>
-                                            <div class="mb-4">
-                                                <label for="email">email</label>
-                                                <input type="text" name="email" placeholder="email" class="focus:shadow-primary-outline dark:bg-gray-950 dark:placeholder:text-white/80 
-                                                dark:text-white/80 leading-5.6 ease block w-full appearance-none rounded-lg border border-solid 
-                                                border-gray-300 bg-white bg-clip-padding p-3 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 
-                                                focus:border-fuchsia-300 focus:outline-none" />
-                                            </div>
-                                            <div class="flex flex-col w-full gap-4">
-                                                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-500">Daftar</button>
-                                                <!-- <a href="{{ route('dashboard-admin') }}" class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-500">Masuk</a> -->
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="absolute top-0 right-0 flex-col justify-center hidden w-6/12 h-full max-w-full px-3 pr-0 my-auto text-center flex-0 lg:flex lg:items-center lg:justify-center">
-                                <div class="relative flex flex-col justify-center h-full bg-cover px-24 m-4 overflow-hidden rounded-xl">
-                                    <span class="absolute top-0 left-0 w-full h-full bg-center bg-cover bg-gradient-to-br from-blue-800 to-blue-300 opacity-80"></span>
-                                    <h4 class="z-20 mt-12 font-bold text-black">Selamat Datang</h4>
-                                    <p class="z-20 text-black ">Website Marketplace</p>
-                                </div>
-                            </div>
+                        <div class="flex mt-6 text-sm">
+                            <label class="flex items-center dark:text-gray-400">
+                                <input type="checkbox"
+                                    class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" />
+                                <span class="ml-2">
+                                    I agree to the
+                                    <span class="underline">privacy policy</span>
+                                </span>
+                            </label>
                         </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-</body>
 
-</html>
+                        <!-- You should use a button here, as the anchor is only used for the example  -->
+                        <button
+                            class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                            type="submit">
+                            Create account
+                        </button>
+
+                    </form>
+
+                    <hr class="my-8" />
+
+                    <button
+                        class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium leading-5  text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray"
+                        disabled>
+                        <svg class="w-4 h-4 mr-2" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                        </svg>
+                        Github
+                    </button>
+                    <button
+                        class="flex items-center justify-center w-full px-4 py-2 mt-4 text-sm font-medium leading-5  text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray"
+                        disabled>
+                        <svg class="w-4 h-4 mr-2" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z" />
+                        </svg>
+                        Twitter
+                    </button>
+
+                    <p class="mt-4">
+                        <a class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
+                            href="{{ route('login') }}">
+                            {{ __('Already registered? login') }}
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
