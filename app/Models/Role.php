@@ -12,9 +12,4 @@ class Role extends Model
     protected $table = 'roles'; // Sesuaikan dengan nama tabel di database
 
     protected $fillable = ['name']; // Sesuaikan dengan migration
-
-    public function users()
-    {
-        return $this->hasMany(User::class);
-    }
 }

@@ -53,15 +53,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Add Product
     Route::post('/admin/product/add/product', [AdminController::class, 'addProduct'])->name('add-product-admin');
-    
 
-    // Route::get('/profile', function () {
-    //     return view('profile');
-    // });
+    //edit update product
+    Route::get('/admin/product/edit/{id}', [AdminController::class, 'edit'])->name('edit-product-admin');
+    Route::put('/admin/product/update/{id}', [AdminController::class, 'updateProduct'])->name('update-product-admin');
 });
 
 
 // User
 Route::get('/user/dashboard', function () {
-            return view('pages.user.dashboard');
-        })->name('dashboard-user');
+    return view('pages.user.dashboard');
+})->name('dashboard-user');
